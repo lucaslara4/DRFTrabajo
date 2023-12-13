@@ -1,6 +1,6 @@
 ### main entregable 3 Derivados renta fija: Tomás Barría, Francisco Gorigoitía, Lucas Laragit config --global user.name "FIRST_NAME LAST_NAME"
 
-# si no funciona usar tal cual: (incluido el punto)
+# si no funciona, usar tal cual: (incluido el punto)
 # pip install .
 
 from datetime import date
