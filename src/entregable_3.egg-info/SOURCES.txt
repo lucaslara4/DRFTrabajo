@@ -1,0 +1,11 @@
+README.md
+setup.cfg
+setup.py
+src/entregable_3.egg-info/PKG-INFO
+src/entregable_3.egg-info/SOURCES.txt
+src/entregable_3.egg-info/dependency_links.txt
+src/entregable_3.egg-info/requires.txt
+src/entregable_3.egg-info/top_level.txt
+src/mypackage/__init__.py
+src/mypackage/funcs/__init__.py
+src/mypackage/funcs/functions.py

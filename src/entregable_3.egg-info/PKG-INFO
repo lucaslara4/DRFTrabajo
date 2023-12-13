@@ -1,0 +1,23 @@
+Metadata-Version: 2.1
+Name: entregable-3
+Version: 0.1.1
+Summary: Testing packages.
+Home-page: https://github.com/lucaslara4/entregable_3
+Author: Lucas Lara
+Author-email: lucaslara.salgado@gmail.com
+License: GPL-3.0-or-later
+Keywords: testeo
+Classifier: Development Status :: 3 - Alpha
+Classifier: License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Requires-Dist: numpy
+
+# Entregable 3 Derivados Renta Fija
+### Tomás Barría, Francisco Gorigoitía, Lucas Lara
+
+### hola

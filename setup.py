@@ -19,7 +19,7 @@ setup(
         "Programming Language :: Python :: 3.12",
     ],
     package_dir={"": "src"},
-    packages=find_packages(where="src", exclude=[""]),
+    packages=find_packages(where="src", exclude=["test"]),
     python_requires=">=3.10",
     install_requires=["numpy"],
 )

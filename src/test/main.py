@@ -1,9 +1,7 @@
 ### main entregable 3 Derivados renta fija: Tomás Barría, Francisco Gorigoitía, Lucas Laragit config --global user.name "FIRST_NAME LAST_NAME"
-import sys
-import os
 
-current_directory = os.path.dirname(os.path.abspath(__file__))
-sys.path.append(os.path.join(current_directory, ".."))
+# si no funciona usar tal cual: (incluido el punto)
+# pip install .
 
 from datetime import date
 from datetime import datetime
