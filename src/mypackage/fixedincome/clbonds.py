@@ -39,4 +39,3 @@ class CLBond:
     def _obtener_wf_desde_tasa_compuesta(self, valor_tasa: float, fecha_inicio: date, fecha_fin: date) -> float:
         fraccion_temporal = (fecha_fin - fecha_inicio).days / 365
         return (1 + valor_tasa) ** fraccion_temporal
-
