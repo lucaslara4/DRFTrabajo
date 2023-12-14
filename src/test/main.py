@@ -21,8 +21,7 @@ print(valor_uf["09-01-2024"])
 ## ejemplos para el entregable 4:
 
 from mypackage.fixedincome.clbonds import CLBond
-from mypackage.fixedincome.fixedcoupon import FixedCoupon
-from datetime import date
+from mypackage.fixedincome.clbonds import FixedCoupon
 
 # Crear instancias de FixedCoupon
 coupon1 = FixedCoupon(amortizacion=1000.0, interes=50.0, saldo_residual=950.0)
