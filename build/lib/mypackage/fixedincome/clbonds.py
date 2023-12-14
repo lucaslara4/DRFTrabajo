@@ -11,7 +11,7 @@ class CLBond:
         self.tera = tera if tera is not None else self.calcular_tera()
 
     def calcular_tera(self):
-        suposicion_inicial = mean(cupon.amortizacion + cupon.interes for cupon in self.cupones_fijos)
+        suposicion_inicial = sum(cupon.amortizacion + cupon.interes for cupon in self.cupones_fijos) / len(self.cupones_fijos)
         tera = newton(lambda tasa: sum((cupon.amortizacion + cupon.interes) / ((1 + tasa) ** self.obtener_fraccion_temporal(cupon.fecha_inicio, cupon.fecha_fin)) for cupon in self.cupones_fijos) - 1, x0=suposicion_inicial)
         return tera
 

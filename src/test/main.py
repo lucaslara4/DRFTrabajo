@@ -16,16 +16,17 @@ date_last_uf = datetime(2023, 12, 9)  # Fecha inicial
 
 # Calcular los valores de la UF hasta el próximo 9 del proximo mes:
 valor_uf = get_ufs(date_last_uf, last_uf_day_9, ipc_day_9)
-print(valor_uf["09-01-2024"])
+print(f"El valor de la UF es: $ {valor_uf['09-01-2024']}")
 
 ## ejemplos para el entregable 4:
 
 from mypackage.fixedincome.clbonds import CLBond
-from mypackage.fixedincome.clbonds import FixedCoupon
+from mypackage.fixedincome.fixedcoupon import FixedCoupon
+from datetime import date
 
-# Crear instancias de FixedCoupon
-coupon1 = FixedCoupon(amortizacion=1000.0, interes=50.0, saldo_residual=950.0)
-coupon2 = FixedCoupon(amortizacion=1200.0, interes=60.0, saldo_residual=1100.0)
+# Crear instancias de FixedCoupon con fechas de inicio y fin
+coupon1 = FixedCoupon(amortizacion=99.0, interes=0.009, saldo_residual=95.0, fecha_inicio=date(2022, 1, 1), fecha_fin=date(2022, 12, 31))
+coupon2 = FixedCoupon(amortizacion=70.0, interes=0.006, saldo_residual=11.0, fecha_inicio=date(2022, 1, 1), fecha_fin=date(2022, 12, 31))
 
 # Crear lista de cupones fijos
 fixed_coupons_list = [coupon1, coupon2]
