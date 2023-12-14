@@ -21,21 +21,21 @@ class CLBond:
             self.tera = nueva_tera
 
     def obtener_valor(self, nominal: float, tasa: float, fecha: date) -> float:
-        return nominal * sum((cupon.amortizacion + cupon.interes) / ((1 + tasa) ** ((cupon.fecha_fin - fecha).days / 365)) for cupon in self.cupones_fijos)
+        return nominal * sum((cupon.amortizacion + cupon.interes) / ((1 + tasa) ** ((cupon.fecha_fin - fecha).days / 360)) for cupon in self.cupones_fijos)
 
     def obtener_dv01(self, nominal: float) -> float:
-        return nominal * sum((cupon.amortizacion + cupon.interes) * ((cupon.fecha_fin - cupon.fecha_inicio).days / 365) / ((1 + self.tera) ** ((cupon.fecha_fin - cupon.fecha_inicio).days / 365 + 1)) for cupon in self.cupones_fijos)
+        return nominal * sum((cupon.amortizacion + cupon.interes) * ((cupon.fecha_fin - cupon.fecha_inicio).days / 360) / ((1 + self.tera) ** ((cupon.fecha_fin - cupon.fecha_inicio).days / 360 + 1)) for cupon in self.cupones_fijos)
 
     def obtener_wf(self, tasa: float, fecha_inicio: date, fecha_fin: date) -> float:
-        fraccion_temporal = (fecha_fin - fecha_inicio).days / 365
+        fraccion_temporal = (fecha_fin - fecha_inicio).days / 360
         return (1 + tasa) ** fraccion_temporal
 
     def obtener_fraccion_temporal(self, fecha_inicio: date, fecha_fin: date) -> float:
-        return (fecha_fin - fecha_inicio).days / 365
+        return (fecha_fin - fecha_inicio).days / 360
 
     def obtener_derivada_npv(self, tasa, cupon):
-        return -cupon.amortizacion * ((cupon.fecha_fin - cupon.fecha_inicio).days / 365) * (1 + tasa) ** (((cupon.fecha_fin - cupon.fecha_inicio).days / 365) - 1)
+        return -cupon.amortizacion * ((cupon.fecha_fin - cupon.fecha_inicio).days / 360) * (1 + tasa) ** (((cupon.fecha_fin - cupon.fecha_inicio).days / 360) - 1)
 
     def _obtener_wf_desde_tasa_compuesta(self, valor_tasa: float, fecha_inicio: date, fecha_fin: date) -> float:
-        fraccion_temporal = (fecha_fin - fecha_inicio).days / 365
+        fraccion_temporal = (fecha_fin - fecha_inicio).days / 360
         return (1 + valor_tasa) ** fraccion_temporal
