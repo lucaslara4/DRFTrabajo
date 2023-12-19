@@ -29,18 +29,8 @@ class CLBond:
             if current.fecha_inicio <= date and current.fecha_fin > date:
                 return current
 
-     def obtener_interes_acumulado(self, date: date, interes_acumulado) -> float:
-        interes_acumulado = self.interes_acumulado if interes_acumulado is None else interes_acumulado
-        cupon_actual = self.obtener_cupon_actual(date)
-        
-        if date >= cupon_actual.fecha_fin or date <= self.fecha_emision:
-            return interes_acumulado
-        
-        interes_acumulado += cupon_actual.obtener_interes_acumulado(date, self.tera)
-        return interes_acumulado
-
     # valor par
-     def obtener_valor_par(self,date: date) -> float:
+    def obtener_valor_par(self,date: date) -> float:
         cupon_actual = self.obtener_cupon_actual(date)
         dias_a_vencimiento = (cupon_actual.fecha_fin - date).days
         factor_de_descuento = 1/((1+self.tera) ** (dias_a_vencimiento/360))
