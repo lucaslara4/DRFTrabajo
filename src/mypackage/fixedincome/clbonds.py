@@ -29,7 +29,7 @@ class CLBond:
             if current.fecha_inicio <= date and current.fecha_fin > date:
                 return current
 
-     def obtener_interes_acumulado(self, date: date, interes_acumulado=0) -> float:
+     def obtener_interes_acumulado(self, date: date, interes_acumulado) -> float:
         interes_acumulado = self.interes_acumulado if interes_acumulado is None else interes_acumulado
         cupon_actual = self.obtener_cupon_actual(date)
         
@@ -40,20 +40,39 @@ class CLBond:
         return interes_acumulado
 
     # valor par
-     def obtener_valor_par(self,date: date, decimals: int=8 ) -> float:
+     def obtener_valor_par(self,date: date) -> float:
         cupon_actual = self.obtener_cupon_actual(date)
-        interes_acumulado_cupon = cupon_actual.obtener_interes_acumulado(date)
-        valor_par = cupon_actual.saldo_residual + interes_acumulado_cupon
-        return round(valor_par, decimals)
-
+        dias_a_vencimiento = (cupon_actual.fecha_fin - date).days
+        factor_de_descuento = 1/((1+self.tera) ** (dias_a_vencimiento/360))
+        valor_par = cupon_actual.saldo_residual * factor_de_descuento
+        return round(valor_par)
+    
      #valor presente
-    def obtener_valor_presente(self, )
+    def obtener_valor_presente(self, date: date, tera: float) -> float:
+        valores_presente = 0
+        for coupon in self.cupones_fijos:
+            if coupon.fecha_fin > date:
+                dias_a_vencimiento = (coupon.fecha_fin - date).days
+                factor_de_descuento = 1 / ((1 + tera) ** (dias_a_vencimiento / 360))
+                valores_presente += coupon.flujo * factor_de_descuento
+        return valores_presente
         
     #precio
-    def obtener_precio(self, ) # depende del valor presente
+    def obtener_precio(self, date: date) -> float: # depende del valor presente
+        vp = self.obtener_valor_presente(date)
+        valor_par = self.obtener_valor_par(date)
+        precio = round(100 * vp/valor_par)
+        return precio
 
-    def obtener_valor(self, nominal: float, tasa: float, fecha: date) -> float: # depende de valor par, valor presente y precio
-        return nominal * sum((cupon.amortizacion + cupon.interes) / ((1 + tasa) ** ((cupon.fecha_fin - fecha).days / 360)) for cupon in self.cupones_fijos)
+    def obtener_valor(self, nominal: float, tasa: float, fecha: date) -> float: # depende de valor par y precio
+        precio = self.obtener_precio(date)
+        valor_par = self.obtener_valor_par(date)
+        return nominal * precio * valor_par / 10000
 
     def obtener_dv01(self, nominal: float) -> float: # depende de valor presente
-        return nominal * sum((cupon.amortizacion + cupon.interes) * ((cupon.fecha_fin - cupon.fecha_inicio).days / 360) / ((1 + self.tera) ** ((cupon.fecha_fin - cupon.fecha_inicio).days / 360 + 1)) for cupon in self.cupones_fijos)
+       vp = self.obtener_valor_presente(date)
+       vp_r = self.obtener_valor_presente(self.fecha_emision,self.tera)
+       r_mas_01 = self.tera + 0.0001
+       vp_por_r_mas_01 = self.obtener_valor_presente(self.fecha_emision,r_mas_01)
+       dv_01 = vp_por_r_mas_01 - vp_r
+       return dv_01
