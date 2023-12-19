@@ -23,9 +23,28 @@ class CLBond:
 
     def obtener_fraccion_temporal(self, fecha_inicio: date, fecha_fin: date) -> float:
         return (fecha_fin - fecha_inicio).days / 360
+    
+    def obtener_cupon_actual(self, date: date) -> FixedCoupon: # necesario para ver el cupon que vamos a trabajar e ir cambiando
+        for current in self.cupones_fijos:
+            if current.fecha_inicio <= date and current.fecha_fin > date:
+                return current
+
+     def obtener_interes_acumulado(self, date: date, interes_acumulado=0) -> float:
+        interes_acumulado = self.interes_acumulado if interes_acumulado is None else interes_acumulado
+        cupon_actual = self.obtener_cupon_actual(date)
+        
+        if date >= cupon_actual.fecha_fin or date <= self.fecha_emision:
+            return interes_acumulado
+        
+        interes_acumulado += cupon_actual.obtener_interes_acumulado(date, self.tera)
+        return interes_acumulado
 
     # valor par
-     def obtener_valor_par(self, )  
+     def obtener_valor_par(self,date: date, decimals: int=8 ) -> float:
+        cupon_actual = self.obtener_cupon_actual(date)
+        interes_acumulado_cupon = cupon_actual.obtener_interes_acumulado(date)
+        valor_par = cupon_actual.saldo_residual + interes_acumulado_cupon
+        return round(valor_par, decimals)
 
      #valor presente
     def obtener_valor_presente(self, )
